@@ -1,3 +1,39 @@
-/* 
-    General Styles
-*/
+body {
+    background-color: black;
+}
+ul {
+  display: flex;
+  list-style-type: none;
+  width: 285px;
+  height: 12px;
+  transition: width 0.3s;
+  margin-left: -30px;
+  position: relative;
+}
+
+ul li {
+  display: block;
+  background: white;
+  font-size: 1.2rem;
+  width: 300px;
+  float: left;
+  margin-left: -25px;
+}
+ul li:hover {
+  font-weight: bold;
+  color: #00b4cc;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+
+ul li.option-active {
+  background: whitesmoke;
+  color: #00b4cc;
+  margin-bottom: 0;
+}
+
+.fa-trash {
+    position: relative;
+    margin-left: -20px;
+    top: 7px;
+}

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-export const Single = props => {
+export const SinglePlanet = props => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 	const myStyles = {
@@ -40,7 +40,7 @@ export const Single = props => {
 	};
 
 	return (
-		<div className="container" style={myStyles} type="people">
+		<div className="container" style={myStyles}>
 			<div className="jumbotron">
 				<h1 className="display-4">
 					<div className="d-flex">
@@ -51,7 +51,7 @@ export const Single = props => {
 							alt="..."
 						/>
 						<span style={h1Style}>
-							<span style={h1Header}>{store.people[params.theid].name}</span> <br />
+							<span style={h1Header}>{store.planets[params.theid].name}</span> <br />
 							asldkfjals;djkfas dflasjdfl asjdflkajs d;lfjasdf lasjdf a;lsdjfa;lsd fa;lsdjf a;sldkjfa
 						</span>
 					</div>
@@ -60,33 +60,25 @@ export const Single = props => {
 				<div className="container d-flex justify-content-evenly" style={textStyles}>
 					<span>
 						Name <br />
-						{store.people[params.theid].name}
+						{store.planets[params.theid].name}
 					</span>
 					<span>
-						Birth Year <br />
-						{store.people[params.theid].birth_year}
+						Climate <br />
+						{store.planets[params.theid].climate}
 					</span>
 					<span>
-						Gender <br />
-						{store.people[params.theid].gender}
+						Terrain <br />
+						{store.planets[params.theid].terrain}
 					</span>
 					<span>
-						Height <br />
-						{store.people[params.theid].height}
-					</span>
-					<span>
-						Hair Color <br />
-						{store.people[params.theid].hair_color}
-					</span>
-					<span>
-						Eye Color <br />
-						{store.people[params.theid].eye_color}
+						Population <br />
+						{store.planets[params.theid].population}
 					</span>
 					<button
 						type="button"
 						className="btn btn-outline-warning"
 						style={buttonStyles}
-						onClick={() => actions.addSinglePerson()}>
+						onClick={() => actions.addSinglePlanet(store.planets[params.theid].name)}>
 						<i className="far fa-heart" />
 					</button>
 				</div>
@@ -95,12 +87,10 @@ export const Single = props => {
 	);
 };
 
-Single.propTypes = {
+SinglePlanet.propTypes = {
 	name: PropTypes.string,
-	gender: PropTypes.string,
-	hair_color: PropTypes.string,
-	eye_color: PropTypes.string,
-	height: PropTypes.string,
-	birth_year: PropTypes.string,
+	climate: PropTypes.string,
+	terrain: PropTypes.string,
+	population: PropTypes.string,
 	theid: PropTypes.number
 };

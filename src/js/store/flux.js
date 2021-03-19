@@ -1,6 +1,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			people: [],
+			planets: [],
+			starships: [],
+			favorites: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -19,11 +23,51 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
+
+			loadPeople: () => {
+				fetch("https://swapi.dev/api/people/")
+					.then(resp => resp.json())
+					.then(data => setStore({ people: data.results }));
 			},
+
+			loadPlanets: () => {
+				fetch("https://swapi.dev/api/planets/")
+					.then(resp => resp.json())
+					.then(data => setStore({ planets: data.results }));
+			},
+
+			loadStarships: () => {
+				fetch("https://swapi.dev/api/starships/")
+					.then(resp => resp.json())
+					.then(data => setStore({ starships: data.results }));
+			},
+
+			addSinglePerson: (item, index) => {
+				let favs = getStore().favorites;
+				let single = getStore().people[index];
+				single.type = "single";
+				setStore({ favorites: [...favs, single] });
+			},
+
+			addSinglePlanet: (item, index) => {
+				let favs = getStore().favorites;
+				let singlePlanet = getStore().planets[index];
+				singlePlanet.type = "singlePlanet";
+				setStore({ favorites: [...favs, singlePlanet] });
+			},
+
+			addSingleStarship: (item, index) => {
+				let favs = getStore().favorites;
+				let singleStarship = getStore().starships[index];
+				singleStarship.type = "singleStarship";
+				setStore({ favorites: [...favs, singleStarship] });
+			},
+
+			delFav: i => {
+				let updatedList = getStore().favorites.filter((element, index) => index !== i);
+				setStore({ favorites: [...updatedList] });
+			},
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-export const Single = props => {
+export const SingleStarship = props => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 	const myStyles = {
@@ -51,7 +51,7 @@ export const Single = props => {
 							alt="..."
 						/>
 						<span style={h1Style}>
-							<span style={h1Header}>{store.people[params.theid].name}</span> <br />
+							<span style={h1Header}>{store.starships[params.theid].name}</span> <br />
 							asldkfjals;djkfas dflasjdfl asjdflkajs d;lfjasdf lasjdf a;lsdjfa;lsd fa;lsdjf a;sldkjfa
 						</span>
 					</div>
@@ -60,33 +60,33 @@ export const Single = props => {
 				<div className="container d-flex justify-content-evenly" style={textStyles}>
 					<span>
 						Name <br />
-						{store.people[params.theid].name}
+						{store.starships[params.theid].name}
 					</span>
 					<span>
-						Birth Year <br />
-						{store.people[params.theid].birth_year}
+						Model <br />
+						{store.starships[params.theid].model}
 					</span>
 					<span>
-						Gender <br />
-						{store.people[params.theid].gender}
+						Speed <br />
+						{store.starships[params.theid].max_atmosphering_speed}
 					</span>
 					<span>
-						Height <br />
-						{store.people[params.theid].height}
+						Credits <br />
+						{store.starships[params.theid].cost_in_credits}
 					</span>
 					<span>
-						Hair Color <br />
-						{store.people[params.theid].hair_color}
+						Crew <br />
+						{store.starships[params.theid].crew}
 					</span>
 					<span>
-						Eye Color <br />
-						{store.people[params.theid].eye_color}
+						Cargo Capacity <br />
+						{store.starships[params.theid].cargo_capacity}
 					</span>
 					<button
 						type="button"
 						className="btn btn-outline-warning"
 						style={buttonStyles}
-						onClick={() => actions.addSinglePerson()}>
+						onClick={() => actions.addSingleStarship(store.starships[params.theid].name)}>
 						<i className="far fa-heart" />
 					</button>
 				</div>
@@ -95,12 +95,12 @@ export const Single = props => {
 	);
 };
 
-Single.propTypes = {
+SingleStarship.propTypes = {
 	name: PropTypes.string,
-	gender: PropTypes.string,
-	hair_color: PropTypes.string,
-	eye_color: PropTypes.string,
-	height: PropTypes.string,
-	birth_year: PropTypes.string,
+	model: PropTypes.string,
+	max_atmosphering_speed: PropTypes.string,
+	cost_in_credits: PropTypes.string,
+	crew: PropTypes.string,
+	cargo_capacity: PropTypes.string,
 	theid: PropTypes.number
 };
