@@ -1,12 +1,26 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import getState from "../store/flux";
 import PropTypes from "prop-types";
 
+const LOCAL_STORAGE_KEY_CLICK_STARSHIP = "indexApp.ClickStarship";
+
 export const StarshipsCG = props => {
 	const { store, actions } = useContext(Context);
 	const [click, setClick] = useState(false);
+
+	useEffect(() => {
+		const storedIndex = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_CLICK_STARSHIP));
+		if (storedIndex) setClick(storedIndex);
+	}, []);
+
+	useEffect(
+		() => {
+			localStorage.setItem(LOCAL_STORAGE_KEY_CLICK_STARSHIP, JSON.stringify(click));
+		},
+		[click]
+	);
 
 	let clickFunction = () => {
 		if (click === false) {
@@ -50,9 +64,9 @@ export const StarshipsCG = props => {
 						<h5 className="card-title">{props.name}</h5>
 						<span className="card-text">Model: {props.model}</span>
 						<br />
-						<span className="card-text">Speed: {props.max_atmosphering_speed}</span>
+						<span className="card-text">Speed: {props.speed}</span>
 						<br />
-						<span className="card-text">Credits: {props.cost_in_credits}</span>
+						<span className="card-text">Credits: {props.cost}</span>
 						<br />
 						<span className="card-text">Crew: {props.crew}</span>
 						<br />
@@ -79,8 +93,8 @@ export const StarshipsCG = props => {
 StarshipsCG.propTypes = {
 	name: PropTypes.string,
 	model: PropTypes.string,
-	max_atmosphering_speed: PropTypes.string,
-	cost_in_credits: PropTypes.string,
+	speed: PropTypes.string,
+	cost: PropTypes.string,
 	crew: PropTypes.string,
 	cargo_capacity: PropTypes.string,
 	theid: PropTypes.number

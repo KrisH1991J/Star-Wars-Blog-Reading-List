@@ -6,6 +6,22 @@ import { Context } from "../store/appContext";
 export const SingleStarship = props => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
+	const [click, setClick] = useState(false);
+
+	let clickFunction = name => {
+		if (click === false) {
+			actions.addStarship(store.starships[params.theid]);
+			setClick(true);
+		} else if (click === true) {
+			{
+				store.favorites.map((item, index) => {
+					return actions.delFav(index);
+				});
+			}
+			setClick(false);
+		}
+	};
+
 	const myStyles = {
 		backgroundColor: "white"
 	};
@@ -68,11 +84,11 @@ export const SingleStarship = props => {
 					</span>
 					<span>
 						Speed <br />
-						{store.starships[params.theid].max_atmosphering_speed}
+						{store.starships[params.theid].speed}
 					</span>
 					<span>
 						Credits <br />
-						{store.starships[params.theid].cost_in_credits}
+						{store.starships[params.theid].cost}
 					</span>
 					<span>
 						Crew <br />
@@ -86,8 +102,8 @@ export const SingleStarship = props => {
 						type="button"
 						className="btn btn-outline-warning"
 						style={buttonStyles}
-						onClick={() => actions.addSingleStarship(store.starships[params.theid].name)}>
-						<i className="far fa-heart" />
+						onClick={() => clickFunction()}>
+						<i className={`${click ? "fas fa-heart" : "far fa-heart"}`} />
 					</button>
 				</div>
 			</div>
@@ -98,8 +114,8 @@ export const SingleStarship = props => {
 SingleStarship.propTypes = {
 	name: PropTypes.string,
 	model: PropTypes.string,
-	max_atmosphering_speed: PropTypes.string,
-	cost_in_credits: PropTypes.string,
+	speed: PropTypes.string,
+	cost: PropTypes.string,
 	crew: PropTypes.string,
 	cargo_capacity: PropTypes.string,
 	theid: PropTypes.number

@@ -6,6 +6,22 @@ import { Context } from "../store/appContext";
 export const Single = props => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
+	const [click, setClick] = useState(false);
+
+	let clickFunction = name => {
+		if (click === false) {
+			actions.addPerson(store.people[params.theid]);
+			setClick(true);
+		} else if (click === true) {
+			{
+				store.favorites.map((item, index) => {
+					return actions.delFav(index);
+				});
+			}
+			setClick(false);
+		}
+	};
+
 	const myStyles = {
 		backgroundColor: "white"
 	};
@@ -86,8 +102,8 @@ export const Single = props => {
 						type="button"
 						className="btn btn-outline-warning"
 						style={buttonStyles}
-						onClick={() => actions.addSinglePerson()}>
-						<i className="far fa-heart" />
+						onClick={() => clickFunction()}>
+						<i className={`${click ? "fas fa-heart" : "far fa-heart"}`} />
 					</button>
 				</div>
 			</div>
@@ -96,6 +112,7 @@ export const Single = props => {
 };
 
 Single.propTypes = {
+	match: PropTypes.object,
 	name: PropTypes.string,
 	gender: PropTypes.string,
 	hair_color: PropTypes.string,

@@ -28,6 +28,7 @@ const injectContext = PassedComponent => {
 			state.actions.loadPeople();
 			state.actions.loadPlanets();
 			state.actions.loadStarships();
+			state.actions.checkSession();
 			const storedIndex = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
 			if (storedIndex) setSave(storedIndex);
 		}, []);

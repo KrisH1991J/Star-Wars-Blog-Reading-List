@@ -1,27 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import "../../styles/home.scss";
 import { CharactersCG } from "./CharactersCG";
 import { PlanetsCG } from "./PlanetsCG";
 import { StarshipsCG } from "./StarshipsCG";
 import { Context } from "../store/appContext";
 
-const LOCAL_STORAGE_KEY_CLICK = "indexApp.click";
-
 export const Home = () => {
 	const { store, actions } = useContext(Context);
-	const [click, setClick] = useState(false);
-
-	useEffect(() => {
-		const storedIndex = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_CLICK));
-		if (storedIndex) setClick(storedIndex);
-	}, []);
-
-	useEffect(
-		() => {
-			localStorage.setItem(LOCAL_STORAGE_KEY_CLICK, JSON.stringify(click));
-		},
-		[click]
-	);
 
 	const scrollBar = {
 		overflow: "scroll",
@@ -89,8 +74,8 @@ export const Home = () => {
 							key={index}
 							name={item.name}
 							model={item.model}
-							max_atmosphering_speed={item.max_atmosphering_speed}
-							cost_in_credits={item.cost_in_credits}
+							speed={item.speed}
+							cost={item.cost}
 							crew={item.crew}
 							cargo_capacity={item.cargo_capacity}
 							theid={index}

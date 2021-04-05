@@ -1,13 +1,27 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import getState from "../store/flux";
 import PropTypes from "prop-types";
 import { Dropdown } from "react-bootstrap";
 
+const LOCAL_STORAGE_KEY_CLICK = "indexApp.click";
+
 export const CharactersCG = props => {
 	const { store, actions } = useContext(Context);
 	const [click, setClick] = useState(false);
+
+	useEffect(() => {
+		const storedIndex = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_CLICK));
+		if (storedIndex) setClick(storedIndex);
+	}, []);
+
+	useEffect(
+		() => {
+			localStorage.setItem(LOCAL_STORAGE_KEY_CLICK, JSON.stringify(click));
+		},
+		[click]
+	);
 
 	let clickFunction = name => {
 		if (click === false) {

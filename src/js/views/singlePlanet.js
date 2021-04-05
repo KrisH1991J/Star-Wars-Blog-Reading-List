@@ -6,6 +6,22 @@ import { Context } from "../store/appContext";
 export const SinglePlanet = props => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
+	const [click, setClick] = useState(false);
+
+	let clickFunction = name => {
+		if (click === false) {
+			actions.addPlanet(store.planets[params.theid]);
+			setClick(true);
+		} else if (click === true) {
+			{
+				store.favorites.map((item, index) => {
+					return actions.delFav(index);
+				});
+			}
+			setClick(false);
+		}
+	};
+
 	const myStyles = {
 		backgroundColor: "white"
 	};
@@ -78,8 +94,8 @@ export const SinglePlanet = props => {
 						type="button"
 						className="btn btn-outline-warning"
 						style={buttonStyles}
-						onClick={() => actions.addSinglePlanet(store.planets[params.theid].name)}>
-						<i className="far fa-heart" />
+						onClick={() => clickFunction()}>
+						<i className={`${click ? "fas fa-heart" : "far fa-heart"}`} />
 					</button>
 				</div>
 			</div>
