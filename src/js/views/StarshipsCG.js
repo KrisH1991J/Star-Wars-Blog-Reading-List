@@ -4,37 +4,8 @@ import { Context } from "../store/appContext";
 import getState from "../store/flux";
 import PropTypes from "prop-types";
 
-const LOCAL_STORAGE_KEY_CLICK_STARSHIP = "indexApp.ClickStarship";
-
 export const StarshipsCG = props => {
 	const { store, actions } = useContext(Context);
-	const [click, setClick] = useState(false);
-
-	useEffect(() => {
-		const storedIndex = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_CLICK_STARSHIP));
-		if (storedIndex) setClick(storedIndex);
-	}, []);
-
-	useEffect(
-		() => {
-			localStorage.setItem(LOCAL_STORAGE_KEY_CLICK_STARSHIP, JSON.stringify(click));
-		},
-		[click]
-	);
-
-	let clickFunction = () => {
-		if (click === false) {
-			actions.addSingleStarship(props.name, props.theid);
-			setClick(true);
-		} else if (click === true) {
-			{
-				store.favorites.map((item, index) => {
-					return actions.delFav(index);
-				});
-			}
-			setClick(false);
-		}
-	};
 
 	const myStyles = {
 		width: "19rem",
@@ -64,9 +35,9 @@ export const StarshipsCG = props => {
 						<h5 className="card-title">{props.name}</h5>
 						<span className="card-text">Model: {props.model}</span>
 						<br />
-						<span className="card-text">Speed: {props.speed}</span>
+						<span className="card-text">Speed: {props.max_atmosphering_speed}</span>
 						<br />
-						<span className="card-text">Credits: {props.cost}</span>
+						<span className="card-text">Credits: {props.cost_in_credits}</span>
 						<br />
 						<span className="card-text">Crew: {props.crew}</span>
 						<br />
@@ -76,13 +47,6 @@ export const StarshipsCG = props => {
 						<Link to={`/singleStarship/${props.theid}`} className="btn btn-outline-primary">
 							Learn More!
 						</Link>
-						<button
-							type="button"
-							className="btn btn-outline-warning"
-							style={buttonStyles}
-							onClick={() => clickFunction()}>
-							<i className={`${click ? "fas fa-heart" : "far fa-heart"}`} />
-						</button>
 					</div>
 				</div>
 			</div>
@@ -93,8 +57,8 @@ export const StarshipsCG = props => {
 StarshipsCG.propTypes = {
 	name: PropTypes.string,
 	model: PropTypes.string,
-	speed: PropTypes.string,
-	cost: PropTypes.string,
+	max_atmosphering_speed: PropTypes.string,
+	cost_in_credits: PropTypes.string,
 	crew: PropTypes.string,
 	cargo_capacity: PropTypes.string,
 	theid: PropTypes.number

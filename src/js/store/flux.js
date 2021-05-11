@@ -5,9 +5,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			planets: [],
 			starships: [],
 			favorites: [],
-			token: null || localStorage.getItem("token"),
-			currentUser: null,
-			isLogin: false,
 			demo: [
 				{
 					title: "FIRST",
@@ -27,76 +24,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-			checkSession: () => {
-				const store = getStore();
-				if (store.token !== null) setStore({ isLogin: true });
-				if (store.token === null) setStore({ isLogin: false });
-			},
-
-			login: (data, history) => {
-				fetch("https://3000-apricot-damselfly-lj5pirqj.ws-us03.gitpod.io/login", {
-					method: "POST",
-					headers: {
-						Accept: "application/json",
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify(data)
-				})
-					.then(res => res.json())
-					.then(data => {
-						setStore({ isLogin: true });
-						setStore({ token: data });
-						localStorage.setItem("token", data.access_token);
-						history.push("/");
-					});
-			},
-
-			getCurrentUser: () => {
-				const token = localStorage.getItem("token");
-				console.log(token);
-				fetch("https://3000-apricot-damselfly-lj5pirqj.ws-us03.gitpod.io/protected", {
-					method: "GET",
-					headers: { Authorization: "Bearer " + token }
-				});
-			},
-
 			loadPeople: () => {
-				fetch("https://3000-apricot-damselfly-lj5pirqj.ws-us03.gitpod.io/people")
+				fetch("https://swapi.dev/api/people/")
 					.then(resp => resp.json())
 					.then(data => setStore({ people: data.results }));
 			},
 
 			loadPlanets: () => {
-				fetch("https://3000-apricot-damselfly-lj5pirqj.ws-us03.gitpod.io/planets")
+				fetch("https://swapi.dev/api/planets/")
 					.then(resp => resp.json())
 					.then(data => setStore({ planets: data.results }));
 			},
 
 			loadStarships: () => {
-				fetch("https://3000-apricot-damselfly-lj5pirqj.ws-us03.gitpod.io/starships")
+				fetch("https://swapi.dev/api/starships/")
 					.then(resp => resp.json())
 					.then(data => setStore({ starships: data.results }));
-			},
-
-			addSinglePerson: (item, index) => {
-				let favs = getStore().favorites;
-				let single = getStore().people[index];
-				single.type = "single";
-				setStore({ favorites: [...favs, single] });
-			},
-
-			addSinglePlanet: (item, index) => {
-				let favs = getStore().favorites;
-				let singlePlanet = getStore().planets[index];
-				singlePlanet.type = "singlePlanet";
-				setStore({ favorites: [...favs, singlePlanet] });
-			},
-
-			addSingleStarship: (item, index) => {
-				let favs = getStore().favorites;
-				let singleStarship = getStore().starships[index];
-				singleStarship.type = "singleStarship";
-				setStore({ favorites: [...favs, singleStarship] });
 			},
 
 			addPerson: (item, index) => {
@@ -121,8 +64,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			delFav: i => {
-				let updatedList = getStore().favorites.filter((element, index) => index !== i);
-				setStore({ favorites: [...updatedList] });
+				let favorites = getStore().favorites;
+				let updatedList = favorites.filter((f, index) => index !== i);
+				setStore({ favorites: updatedList });
 			},
 
 			changeColor: (index, color) => {

@@ -74,8 +74,8 @@ export const Home = () => {
 							key={index}
 							name={item.name}
 							model={item.model}
-							speed={item.speed}
-							cost={item.cost}
+							max_atmosphering_speed={item.max_atmosphering_speed}
+							cost_in_credits={item.cost_in_credits}
 							crew={item.crew}
 							cargo_capacity={item.cargo_capacity}
 							theid={index}

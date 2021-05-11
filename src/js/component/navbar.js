@@ -22,6 +22,10 @@ export const Navbar = () => {
 		fontSize: "40px"
 	};
 
+	const buttonStyles = {
+		marginRight: "-1045px"
+	};
+
 	return (
 		<nav className="navbar navbar-light bg-light mb-3">
 			<div className="container">

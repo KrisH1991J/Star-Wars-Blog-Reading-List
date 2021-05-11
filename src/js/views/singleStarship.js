@@ -84,11 +84,11 @@ export const SingleStarship = props => {
 					</span>
 					<span>
 						Speed <br />
-						{store.starships[params.theid].speed}
+						{store.starships[params.theid].max_atmosphering_speed}
 					</span>
 					<span>
 						Credits <br />
-						{store.starships[params.theid].cost}
+						{store.starships[params.theid].cost_in_credits}
 					</span>
 					<span>
 						Crew <br />
@@ -114,8 +114,8 @@ export const SingleStarship = props => {
 SingleStarship.propTypes = {
 	name: PropTypes.string,
 	model: PropTypes.string,
-	speed: PropTypes.string,
-	cost: PropTypes.string,
+	max_atmosphering_speed: PropTypes.string,
+	cost_in_credits: PropTypes.string,
 	crew: PropTypes.string,
 	cargo_capacity: PropTypes.string,
 	theid: PropTypes.number

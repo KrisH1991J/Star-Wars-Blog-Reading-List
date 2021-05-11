@@ -3,7 +3,6 @@ import getState from "./flux.js";
 
 // Don't change, here is where we initialize our context, by default it's just going to be null.
 export const Context = React.createContext(null);
-const LOCAL_STORAGE_KEY = "indexApp.save";
 
 // This function injects the global store to any view/component where you want to use it, we will inject the context to layout.js, you can see it here:
 // https://github.com/4GeeksAcademy/react-hello-webapp/blob/master/src/js/layout.js#L35
@@ -28,17 +27,7 @@ const injectContext = PassedComponent => {
 			state.actions.loadPeople();
 			state.actions.loadPlanets();
 			state.actions.loadStarships();
-			state.actions.checkSession();
-			const storedIndex = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-			if (storedIndex) setSave(storedIndex);
 		}, []);
-
-		useEffect(
-			() => {
-				localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(save));
-			},
-			[save]
-		);
 
 		// The initial value for the context is not null anymore, but the current state of this component,
 		// the context will now have a getStore, getActions and setStore functions available, because they were declared
